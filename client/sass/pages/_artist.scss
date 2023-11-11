@@ -735,6 +735,7 @@
           width: 100%;
           h5 {
             @include header-sans(16px, 140%);
+            color: $caption-label-text;
           }
           div {
             @include text-space(12px, 110%);

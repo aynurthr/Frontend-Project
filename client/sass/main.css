@@ -4460,6 +4460,7 @@
     font-weight: 600;
     line-height: 140%;
     text-transform: capitalize;
+    color: #858584;
   }
   #Artist .tabs .container > button div {
     color: #fff;
@@ -4874,6 +4875,7 @@
     font-weight: 600;
     line-height: 140%;
     text-transform: capitalize;
+    color: #858584;
   }
   #Marketplace .tabs .container > button div {
     color: #fff;
@@ -5298,6 +5300,7 @@
     font-weight: 600;
     line-height: 140%;
     text-transform: capitalize;
+    color: #858584;
   }
 }
 @media screen and (max-width: 707px) {
@@ -5311,4 +5314,191 @@
 }
 #Rankings .clicked-on h5 {
   color: #fff !important;
+}
+#Rankings .artists {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+#Rankings .artists .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  row-gap: 20px;
+}
+#Rankings .artists__btns {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #3b3b3b;
+  height: 46px;
+  padding: 12px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+#Rankings .artists__btns p {
+  color: #fff;
+  font-family: "Space Mono";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  color: #858584;
+}
+#Rankings .artists__btns__rank-artist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 20px;
+     -moz-column-gap: 20px;
+          column-gap: 20px;
+  width: 430px;
+}
+#Rankings .artists__btns__rank-artist p:first-child {
+  width: 30px;
+  text-align: center;
+}
+#Rankings .artists__btns__stats {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 20px;
+     -moz-column-gap: 20px;
+          column-gap: 20px;
+}
+#Rankings .artists__btns__stats p {
+  width: 160px;
+}
+#Rankings .artists__btns__stats p:nth-child(3) {
+  width: 110px;
+}
+#Rankings .artists__btns__stats p:last-child {
+  width: 30px;
+}
+#Rankings .artists__container__artist {
+  width: 100%;
+  border-radius: 20px;
+  background: #3b3b3b;
+  padding: 12px 20px;
+  height: 84px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 60px;
+     -moz-column-gap: 60px;
+          column-gap: 60px;
+}
+#Rankings .artists__container__artist p {
+  color: #fff;
+  font-family: "Space Mono";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  color: #858584;
+}
+#Rankings .artists__container__artist__rank-artist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 20px;
+     -moz-column-gap: 20px;
+          column-gap: 20px;
+  width: 430px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#Rankings .artists__container__artist__rank-artist__rank {
+  border-radius: 20px;
+  background: #2b2b2b;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  font-family: "Space Mono";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  color: #858584;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+#Rankings .artists__container__artist__rank-artist__artist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 20px;
+     -moz-column-gap: 20px;
+          column-gap: 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#Rankings .artists__container__artist__rank-artist__artist img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+}
+#Rankings .artists__container__artist__rank-artist__artist h5 {
+  color: #fff;
+  font-family: "Work Sans";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+  text-transform: capitalize;
+}
+#Rankings .artists__container__artist__stats {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 20px;
+     -moz-column-gap: 20px;
+          column-gap: 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#Rankings .artists__container__artist__stats p {
+  width: 160px;
+  color: white;
+}
+#Rankings .artists__container__artist__stats p:nth-child(3) {
+  width: 110px;
+}
+#Rankings .artists__container__artist__stats p:first-child {
+  color: #00ac4f;
+}
+#Rankings .artists__container__artist__stats div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 30px;
+  height: 30px;
 }

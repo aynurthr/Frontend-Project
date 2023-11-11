@@ -60,6 +60,7 @@
           width: 100%;
           h5 {
             @include header-sans(16px, 140%);
+            color: $caption-label-text;
           }
         }
       }
@@ -77,6 +78,121 @@
     border-bottom: 2px solid $caption-label-text !important;
     h5 {
       color: $text !important;
+    }
+  }
+  .artists {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .container {
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+    }
+    &__btns {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid $background---secondary;
+      height: 46px;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      //   column-gap: 60px;
+      p {
+        @include text-space(16px, 140%);
+        color: $caption-label-text;
+      }
+      &__rank-artist {
+        display: flex;
+        column-gap: 20px;
+        width: 430px;
+        p:first-child {
+          width: 30px;
+          text-align: center;
+        }
+      }
+      &__stats {
+        display: flex;
+        column-gap: 20px;
+
+        p {
+          width: 160px;
+        }
+        p:nth-child(3) {
+          width: 110px;
+        }
+        p:last-child {
+          width: 30px;
+        }
+      }
+    }
+    &__container {
+      &__artist {
+        width: 100%;
+        border-radius: 20px;
+        background: $background---secondary;
+        padding: 12px 20px;
+        height: 84px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 60px;
+        p {
+          @include text-space(16px, 140%);
+          color: $caption-label-text;
+        }
+        &__rank-artist {
+          display: flex;
+          column-gap: 20px;
+          width: 430px;
+          align-items: center;
+          &__rank {
+            border-radius: 20px;
+            background: $background;
+            width: 30px;
+            height: 30px;
+            @include text-space(16px, 140%);
+            color: $caption-label-text;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          &__artist {
+            display: flex;
+            column-gap: 20px;
+            align-items: center;
+            img {
+              width: 60px;
+              height: 60px;
+              border-radius: 100px;
+            }
+            h5 {
+              @include header-sans(22px, 140%);
+            }
+          }
+        }
+        &__stats {
+          display: flex;
+          column-gap: 20px;
+          align-items: center;
+          p {
+            width: 160px;
+            color: white;
+          }
+          p:nth-child(3) {
+            width: 110px;
+          }
+          p:first-child {
+            color: $green;
+          }
+          div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
     }
   }
 }
