@@ -5236,3 +5236,79 @@
     margin-bottom: 10px;
   }
 }
+#Rankings .tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  row-gap: 10px;
+}
+#Rankings .tabs .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+#Rankings .tabs .container > button {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  height: 60px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 16px;
+     -moz-column-gap: 16px;
+          column-gap: 16px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0px 30px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+#Rankings .tabs .container > button h5 {
+  color: #fff;
+  font-family: "Work Sans";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+  text-transform: capitalize;
+  color: #858584;
+}
+@media screen and (max-width: 1067px) {
+  #Rankings .tabs .container > button {
+    width: 100%;
+  }
+  #Rankings .tabs .container > button h5 {
+    color: #fff;
+    font-family: "Work Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    text-transform: capitalize;
+  }
+}
+@media screen and (max-width: 707px) {
+  #Rankings .tabs .container > button {
+    padding: 0px 10px;
+    width: 100%;
+  }
+}
+#Rankings .clicked-on {
+  border-bottom: 2px solid #858584 !important;
+}
+#Rankings .clicked-on h5 {
+  color: #fff !important;
+}

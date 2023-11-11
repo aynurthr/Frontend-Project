@@ -29,4 +29,54 @@
       }
     }
   }
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    .container {
+      display: flex;
+      justify-content: space-between;
+      > button {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        height: 60px;
+        width: 100%;
+        display: flex;
+        column-gap: 16px;
+        align-items: center;
+        padding: 0px 30px;
+        justify-content: center;
+        h5 {
+          @include header-sans(22px, 140%);
+          color: $caption-label-text;
+        }
+      }
+    }
+    @media screen and (max-width: $tablet-width) {
+      .container {
+        > button {
+          width: 100%;
+          h5 {
+            @include header-sans(16px, 140%);
+          }
+        }
+      }
+    }
+    @media screen and (max-width: $mobile-width) {
+      .container {
+        > button {
+          padding: 0px 10px;
+          width: 100%;
+        }
+      }
+    }
+  }
+  .clicked-on {
+    border-bottom: 2px solid $caption-label-text !important;
+    h5 {
+      color: $text !important;
+    }
+  }
 }
