@@ -96,7 +96,6 @@
       padding: 12px 20px;
       display: flex;
       justify-content: space-between;
-      //   column-gap: 60px;
       p {
         @include text-space(16px, 140%);
         color: $caption-label-text;
@@ -124,6 +123,52 @@
           width: 30px;
         }
       }
+      @media (max-width: $tablet-width) {
+        &__rank-artist {
+          width: 380px;
+        }
+        &__stats {
+          p {
+            width: 100px;
+          }
+          p:nth-child(2) {
+            display: none;
+          }
+          p:nth-child(3) {
+            width: 100px;
+          }
+        }
+      }
+      @media (max-width: $mobile-width) {
+        padding: 12px 10px;
+        p {
+          @include text-space(12px, 110%);
+          color: $caption-label-text;
+        }
+        &__rank-artist {
+          p:first-child {
+            font-size: 16px;
+            line-height: 140%;
+            width: 24px;
+          }
+          column-gap: 10px;
+          width: 215px;
+          align-items: center;
+        }
+        &__stats {
+          align-items: center;
+          column-gap: 0px;
+          p:first-child {
+            display: none;
+          }
+          p:nth-child(3) {
+            width: 50px;
+          }
+          p:last-child {
+            width: 24px;
+          }
+        }
+      }
     }
     &__container {
       &__artist {
@@ -140,6 +185,7 @@
           @include text-space(16px, 140%);
           color: $caption-label-text;
         }
+
         &__rank-artist {
           display: flex;
           column-gap: 20px;
@@ -190,6 +236,81 @@
             justify-content: center;
             width: 30px;
             height: 30px;
+          }
+        }
+      }
+      @media (max-width: $tablet-width) {
+        &__artist {
+          height: 60px;
+          column-gap: 20px;
+
+          &__rank-artist {
+            width: 410px;
+            &__rank {
+              background: transparent;
+            }
+            &__artist {
+              column-gap: 12px;
+              img {
+                width: 24px;
+                height: 24px;
+              }
+            }
+          }
+          &__stats {
+            p {
+              width: 100px;
+            }
+            p:nth-child(3) {
+              width: 100px;
+            }
+            p:nth-child(2) {
+              display: none;
+            }
+          }
+        }
+      }
+      @media (max-width: $mobile-width) {
+        &__artist {
+          padding: 12px 10px;
+          height: 50px;
+          column-gap: 14px;
+          p {
+            @include text-space(12px, 110%);
+            color: $caption-label-text;
+          }
+
+          &__rank-artist {
+            column-gap: 10px;
+            width: 215px;
+            &__rank {
+              width: 24px;
+              height: 24px;
+              @include text-space(12px, 110%);
+              color: $caption-label-text;
+            }
+            &__artist {
+              column-gap: 12px;
+              h5 {
+                @include text-sans(16px, 140%);
+              }
+            }
+          }
+          &__stats {
+            column-gap: 0px;
+            p:first-child {
+              display: none;
+            }
+            p:nth-child(3) {
+              width: 50px;
+            }
+            div {
+              width: 24px;
+              height: 24px;
+              img {
+                width: 10px;
+              }
+            }
           }
         }
       }

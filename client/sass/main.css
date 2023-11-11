@@ -5381,6 +5381,65 @@
 #Rankings .artists__btns__stats p:last-child {
   width: 30px;
 }
+@media (max-width: 1067px) {
+  #Rankings .artists__btns__rank-artist {
+    width: 380px;
+  }
+  #Rankings .artists__btns__stats p {
+    width: 100px;
+  }
+  #Rankings .artists__btns__stats p:nth-child(2) {
+    display: none;
+  }
+  #Rankings .artists__btns__stats p:nth-child(3) {
+    width: 100px;
+  }
+}
+@media (max-width: 707px) {
+  #Rankings .artists__btns {
+    padding: 12px 10px;
+  }
+  #Rankings .artists__btns p {
+    color: #fff;
+    font-family: "Space Mono";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+    color: #858584;
+  }
+  #Rankings .artists__btns__rank-artist {
+    -webkit-column-gap: 10px;
+       -moz-column-gap: 10px;
+            column-gap: 10px;
+    width: 215px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  #Rankings .artists__btns__rank-artist p:first-child {
+    font-size: 16px;
+    line-height: 140%;
+    width: 24px;
+  }
+  #Rankings .artists__btns__stats {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-column-gap: 0px;
+       -moz-column-gap: 0px;
+            column-gap: 0px;
+  }
+  #Rankings .artists__btns__stats p:first-child {
+    display: none;
+  }
+  #Rankings .artists__btns__stats p:nth-child(3) {
+    width: 50px;
+  }
+  #Rankings .artists__btns__stats p:last-child {
+    width: 24px;
+  }
+}
 #Rankings .artists__container__artist {
   width: 100%;
   border-radius: 20px;
@@ -5501,4 +5560,102 @@
           justify-content: center;
   width: 30px;
   height: 30px;
+}
+@media (max-width: 1067px) {
+  #Rankings .artists__container__artist {
+    height: 60px;
+    -webkit-column-gap: 20px;
+       -moz-column-gap: 20px;
+            column-gap: 20px;
+  }
+  #Rankings .artists__container__artist__rank-artist {
+    width: 410px;
+  }
+  #Rankings .artists__container__artist__rank-artist__rank {
+    background: transparent;
+  }
+  #Rankings .artists__container__artist__rank-artist__artist {
+    -webkit-column-gap: 12px;
+       -moz-column-gap: 12px;
+            column-gap: 12px;
+  }
+  #Rankings .artists__container__artist__rank-artist__artist img {
+    width: 24px;
+    height: 24px;
+  }
+  #Rankings .artists__container__artist__stats p {
+    width: 100px;
+  }
+  #Rankings .artists__container__artist__stats p:nth-child(3) {
+    width: 100px;
+  }
+  #Rankings .artists__container__artist__stats p:nth-child(2) {
+    display: none;
+  }
+}
+@media (max-width: 707px) {
+  #Rankings .artists__container__artist {
+    padding: 12px 10px;
+    height: 50px;
+    -webkit-column-gap: 14px;
+       -moz-column-gap: 14px;
+            column-gap: 14px;
+  }
+  #Rankings .artists__container__artist p {
+    color: #fff;
+    font-family: "Space Mono";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+    color: #858584;
+  }
+  #Rankings .artists__container__artist__rank-artist {
+    -webkit-column-gap: 10px;
+       -moz-column-gap: 10px;
+            column-gap: 10px;
+    width: 215px;
+  }
+  #Rankings .artists__container__artist__rank-artist__rank {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    font-family: "Space Mono";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+    color: #858584;
+  }
+  #Rankings .artists__container__artist__rank-artist__artist {
+    -webkit-column-gap: 12px;
+       -moz-column-gap: 12px;
+            column-gap: 12px;
+  }
+  #Rankings .artists__container__artist__rank-artist__artist h5 {
+    color: #fff;
+    font-family: "Work Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+  #Rankings .artists__container__artist__stats {
+    -webkit-column-gap: 0px;
+       -moz-column-gap: 0px;
+            column-gap: 0px;
+  }
+  #Rankings .artists__container__artist__stats p:first-child {
+    display: none;
+  }
+  #Rankings .artists__container__artist__stats p:nth-child(3) {
+    width: 50px;
+  }
+  #Rankings .artists__container__artist__stats div {
+    width: 24px;
+    height: 24px;
+  }
+  #Rankings .artists__container__artist__stats div img {
+    width: 10px;
+  }
 }
