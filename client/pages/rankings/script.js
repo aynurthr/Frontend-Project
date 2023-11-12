@@ -44,14 +44,16 @@ function getData() {
     })
     .then((data) => {
       let artists = data;
-      artists.forEach((artist) => {
+      console.log(artists);
+      artists.forEach((artist, idx) => {
         createArtistBox(artist, artistsContainer);
         newArtist = document.querySelectorAll(".artists__container__artist")[
-          artist.id - 1
+          idx
         ];
+        console.log(newArtist);
         newArtist.addEventListener("click", () => {
           window.open(
-            `http://127.0.0.1:5500/client/pages/artist/index.html?artist_id=${artist.id}`,
+            `../../../client/pages/artist/index.html?artist_id=${artist.id}`,
             "_self"
           );
         });
@@ -94,7 +96,7 @@ function createArtistBox(artist, artistsContainer) {
   <p>+${artist.totalSale.value}%</p>
   <p>${artist.nftSold}</p>
   <p>${artist.volume.substring(0, artist.volume.length - 3)}k</p>
-  <div>
+  <div class="delete-btn">
     <img
       src="../../media/icons/trash-bin.svg"
       alt="trash bin icon"
@@ -102,5 +104,24 @@ function createArtistBox(artist, artistsContainer) {
   </div>
 </div>`;
 
+  const artistDeleteBtn =
+    artistContainer.getElementsByClassName("delete-btn")[0];
+  console.log(artistDeleteBtn);
+  artistDeleteBtn.addEventListener("click", (e) => {
+    artistDelete(artist.id, artist.name, artistContainer);
+    e.stopPropagation();
+  });
+
   artistsContainer.appendChild(artistContainer);
+}
+
+async function artistDelete(artistId, artistName, artistContainer) {
+  if (confirm(`Are you sure to delete ${artistName} from the rankings?`)) {
+    const response = await fetch(`${API_BASE_URL}/${artistId}`, {
+      method: "DELETE",
+    });
+    if (response.status === 200) {
+      artistContainer.remove();
+    }
+  }
 }

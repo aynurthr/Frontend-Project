@@ -51,7 +51,7 @@ function getData() {
         ];
         newArtist.addEventListener("click", () => {
           window.open(
-            `http://127.0.0.1:5500/client/pages/artist/index.html?artist_id=${artist.id}`,
+            `../../../client/pages/artist/index.html?artist_id=${artist.id}`,
             "_self"
           );
         });

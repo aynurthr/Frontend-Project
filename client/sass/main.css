@@ -5472,6 +5472,9 @@
      -moz-column-gap: 60px;
           column-gap: 60px;
 }
+#Rankings .artists__container__artist:hover {
+  cursor: pointer;
+}
 #Rankings .artists__container__artist p {
   color: #fff;
   font-family: "Space Mono";
