@@ -28,14 +28,13 @@ allTimeBtn.addEventListener("click", () => {
 btnClick(todayBtn);
 
 //API part:
-
 const API_BASE_URL = "http://localhost:3000/api/creators";
 const artistsContainer = document.querySelector(".artists__container");
-// const loadingElement = document.querySelector(".loader");
-// loadingElement.style.display = "none";
+const loadingElement = document.querySelector(".artists__container__loader");
+loadingElement.style.display = "none";
 
 function getData() {
-  // loadingElement.style.display = "flex";
+  loadingElement.style.display = "flex";
   fetch(API_BASE_URL)
     .then((res) => {
       if (res.status !== 200) {
@@ -58,22 +57,22 @@ function getData() {
           );
         });
       });
+    })
+    // .catch((err) => {
+    //   console.log("err", err);
+    //   const errorMessage = `
+    // <div class="top-artists__artists__bad-request">
+    // <img src="../../media/icons/sad-face.svg" alt="sad face icon" />
+    //   <p>Sorry, we are experiencing technical difficulties with our API server. Please check back later.</p>
+    // </div>`;
+    //   document.querySelector(".top-artists__artists").innerHTML = errorMessage;
+    //   document.querySelector(".top-artists__mobile-btn").style.display = "none";
+    //   document.querySelector(".top-artists__header a").style.display = "none";
+    //   document.querySelector(".top-artists__artists").style.display = "initial";
+    // })
+    .finally(() => {
+      loadingElement.style.display = "none";
     });
-  // .catch((err) => {
-  //   console.log("err", err);
-  //   const errorMessage = `
-  //   <div class="top-artists__artists__bad-request">
-  //   <img src="../../media/icons/sad-face.svg" alt="sad face icon" />
-  //     <p>Sorry, we are experiencing technical difficulties with our API server. Please check back later.</p>
-  //   </div>`;
-  //   document.querySelector(".top-artists__artists").innerHTML = errorMessage;
-  //   document.querySelector(".top-artists__mobile-btn").style.display = "none";
-  //   document.querySelector(".top-artists__header a").style.display = "none";
-  //   document.querySelector(".top-artists__artists").style.display = "initial";
-  // })
-  // .finally(() => {
-  //   loadingElement.style.display = "none";
-  // });
 }
 
 getData();

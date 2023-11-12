@@ -5587,6 +5587,62 @@
           transform: scale(0.9);
   cursor: pointer;
 }
+#Rankings .artists__container__loader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  row-gap: 20px;
+  /*SHIMMER EFFECT*/
+}
+#Rankings .artists__container__loader .skeleton {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  overflow: hidden;
+  background-color: #3b3b3b;
+  border-radius: 20px;
+  height: 84px;
+}
+@media (max-width: 1067px) {
+  #Rankings .artists__container__loader .skeleton {
+    height: 60px;
+  }
+}
+@media (max-width: 707px) {
+  #Rankings .artists__container__loader .skeleton {
+    height: 50px;
+  }
+}
+#Rankings .artists__container__loader .skeleton::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(255, 255, 255, 0)), color-stop(20%, rgba(255, 255, 255, 0.2)), color-stop(60%, rgba(255, 255, 255, 0.5)), to(rgba(255, 255, 255, 0)));
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+  -webkit-animation: shimmer 2s infinite;
+          animation: shimmer 2s infinite;
+  content: "";
+}
+@-webkit-keyframes shimmer {
+  100% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+}
+@keyframes shimmer {
+  100% {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+}
 @media (max-width: 1067px) {
   #Rankings .artists__container__artist {
     height: 60px;
