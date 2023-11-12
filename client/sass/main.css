@@ -5453,6 +5453,40 @@
           flex-direction: column;
   row-gap: 20px;
 }
+#Rankings .artists__container__bad-request {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  row-gap: 10px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#Rankings .artists__container__bad-request p {
+  text-align: center;
+  color: #fff;
+  font-family: "Space Mono";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  color: #858584;
+}
+#Rankings .artists__container__bad-request img {
+  width: 50px;
+}
+@media (max-width: 1067px) {
+  #Rankings .artists__container__bad-request p {
+    font-size: 20px;
+  }
+  #Rankings .artists__container__bad-request img {
+    width: 30px;
+  }
+}
 #Rankings .artists__container__artist {
   width: 100%;
   border-radius: 20px;

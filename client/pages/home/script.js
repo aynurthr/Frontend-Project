@@ -58,7 +58,6 @@ function getData() {
       });
     })
     .catch((err) => {
-      console.log("err", err);
       const errorMessage = `
       <div class="top-artists__artists__bad-request">
       <img src="../../media/icons/sad-face.svg" alt="sad face icon" />
