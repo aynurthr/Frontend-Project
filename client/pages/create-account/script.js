@@ -9,6 +9,21 @@ form.addEventListener("submit", function (event) {
   const password = document.getElementById("password");
   const confirmPassword = document.getElementById("confirmPassword");
 
+  //To hide the error mesages when user starts typing:
+  username.addEventListener("input", () => {
+    document.querySelector(".username.error-message").textContent = "";
+  });
+  email.addEventListener("input", () => {
+    document.querySelector(".email.error-message").textContent = "";
+  });
+  password.addEventListener("input", () => {
+    document.querySelector(".password.error-message").textContent = "";
+  });
+  confirmPassword.addEventListener("input", () => {
+    document.querySelector(".confirmation-password.error-message").textContent =
+      "";
+  });
+
   const usernameRegex =
     /(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
   //   Only contains alphanumeric characters, underscore and dot.
@@ -61,16 +76,19 @@ form.addEventListener("submit", function (event) {
       "Invalid password";
   } else {
     document.querySelector(".password.error-message").textContent = "";
-    if (password.value !== confirmPassword.value) {
-      valid = false;
-      document.querySelector(
-        ".confirmation-password.error-message"
-      ).textContent = "Passwords do not match";
-    } else {
-      document.querySelector(
-        ".confirmation-password.error-message"
-      ).textContent = "";
-    }
+  }
+
+  if (confirmPassword.value == "") {
+    valid = false;
+    document.querySelector(".confirmation-password.error-message").textContent =
+      "*Required field";
+  } else if (password.value !== confirmPassword.value) {
+    valid = false;
+    document.querySelector(".confirmation-password.error-message").textContent =
+      "Passwords do not match";
+  } else {
+    document.querySelector(".confirmation-password.error-message").textContent =
+      "";
   }
   event.preventDefault();
 
