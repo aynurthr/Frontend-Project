@@ -90,11 +90,13 @@ app.post("/api/nfts", (req, res) => {
       creatorId: undefined,
     }));
 
-    res.status(200).json({
-      totalCount: nfts.length,
-      hasMore: endIndex < filteredNFTS.length,
-      nfts: nftsSlice,
-    });
+    setTimeout(() => {
+      res.status(200).json({
+        totalCount: nfts.length,
+        hasMore: endIndex < filteredNFTS.length,
+        nfts: nftsSlice,
+      });
+    }, 3000);
   } catch (error) {
     res.status(500).json({ error: `Internal Server Error! ${error}` });
   }
