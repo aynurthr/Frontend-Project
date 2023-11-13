@@ -96,6 +96,7 @@
       padding: 12px 20px;
       display: flex;
       justify-content: space-between;
+      user-select: none; //so that it doesnt get selected when pressed repeatedly
       p {
         @include text-space(16px, 140%);
         color: $caption-label-text;

@@ -44,10 +44,10 @@ function getData() {
     })
     .then((data) => {
       let artists = data;
-      artists.forEach((artist) => {
+      artists.forEach((artist, idx) => {
         createArtistBox(artist, artistsContainer);
         newArtist = document.querySelectorAll(".top-artists__artists__artist")[
-          artist.id - 1
+          idx
         ];
         newArtist.addEventListener("click", () => {
           window.open(
