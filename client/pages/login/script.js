@@ -40,7 +40,8 @@ form.addEventListener("submit", function (event) {
       .then((response) => {
         if (response.status === 200) {
           Toastify({
-            text: `Login successful! Welcome back, ${newUsername}!`,
+            text: `Login successful! Welcome back, ${newUsername}!
+            You are now being redirected to the homepage.`,
             duration: 3000,
             gravity: "top",
             position: "right",
@@ -50,6 +51,10 @@ form.addEventListener("submit", function (event) {
           }).showToast();
           username.value = "";
           password.value = "";
+
+          setTimeout(() => {
+            window.location.href = "../../../client/pages/home/index.html";
+          }, 2000);
         } else if (response.status === 400) {
           return response.json();
         }
