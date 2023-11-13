@@ -5012,6 +5012,9 @@
 }
 #Marketplace .nft-container__empty {
   display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #Marketplace .nft-container__empty h2 {
   text-align: center;
@@ -5036,7 +5039,6 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding-bottom: 40px;
 }
 #Marketplace .loader-container .loader {
   display: -webkit-box;

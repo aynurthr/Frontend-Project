@@ -8,11 +8,16 @@ const searchInput = document.getElementById("search-input");
 let pageSize = 6;
 let skip = 0;
 let searchStr = "";
+
+//bir nece request gonderende bize qayidan data(lar) qarismasin deye id
+//yolundan istifade edirik. Eger id-ler ust-uste dusmurse,
+//bu o demekdir ki, yeni request gonderilib, ve kohne requestin cavabi
+//artiq lazim deyil, ve hemin kohne datani artiq container e doldurmuruq.
 let currentSearchId = 0;
 
 function fetchNFTs() {
   const currentSearch = currentSearchId;
-
+  console.log(currentSearch);
   showLoader();
   fetch(NFT_API_URL, {
     method: "POST",
@@ -30,12 +35,21 @@ function fetchNFTs() {
     })
     .then((data) => {
       if (currentSearch === currentSearchId) {
+        console.log(currentSearch);
         console.log(data);
 
         totalNFTCount.innerHTML = data.totalCount;
-
-        renderNFTs(data.nfts);
-        skip += pageSize;
+        if (data.totalCount == 0) {
+          const emptyDivElement = document.createElement("div");
+          emptyDivElement.classList.add("nft-container__empty");
+          emptyDivElement.innerHTML = `<h2>Oops! No Matching NFTs Found!</h2>`;
+          emptyDivElement.style.display = "flex";
+          emptyDivElement.style.gridColumn = "span 3";
+          nftContainer.appendChild(emptyDivElement);
+        } else {
+          renderNFTs(data.nfts);
+          skip += pageSize;
+        }
 
         if (!data.hasMore) {
           hideLoader();
@@ -54,6 +68,7 @@ searchInput.addEventListener("keyup", function (event) {
   clearTimeout(timeoutId);
   timeoutId = setTimeout(() => {
     if (currentSearch === currentSearchId) {
+      console.log(currentSearch);
       searchStr = event.target.value;
       skip = 0;
       nftContainer.innerHTML = "";
@@ -125,7 +140,6 @@ nftsBtn.addEventListener("click", () => {
     nftCardsContainer.style.display = "grid";
     document.querySelector(".nft-container__empty").style.display = "none";
     document.querySelector(".loader-container").style.display = "flex";
-    window.addEventListener("scroll", handleScroll);
   } else {
     return;
   }
@@ -136,7 +150,6 @@ collectionBtn.addEventListener("click", () => {
   nftCardsContainer.style.display = "none";
   document.querySelector(".nft-container__empty").style.display = "initial";
   document.querySelector(".loader-container").style.display = "none";
-  window.removeEventListener("scroll", handleScroll);
 });
 btnClick(nftsBtn);
 

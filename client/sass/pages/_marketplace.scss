@@ -201,6 +201,7 @@
     }
     &__empty {
       display: none;
+      justify-content: center;
       h2 {
         text-align: center;
         @include text-space(30px, 120%);
@@ -216,7 +217,6 @@
     display: none;
     justify-content: center;
     align-items: center;
-    padding-bottom: 40px;
     .loader {
       display: flex;
       justify-content: center;
