@@ -5301,6 +5301,27 @@
   }
 }
 @media screen and (max-width: 707px) {
+  #Rankings .tabs .container #today-button h5 {
+    font-size: 0;
+  }
+  #Rankings .tabs .container #today-button h5::before {
+    content: "1d";
+    font-size: 16px;
+  }
+  #Rankings .tabs .container #this-week-button h5 {
+    font-size: 0;
+  }
+  #Rankings .tabs .container #this-week-button h5::before {
+    content: "7d";
+    font-size: 16px;
+  }
+  #Rankings .tabs .container #this-month-button h5 {
+    font-size: 0;
+  }
+  #Rankings .tabs .container #this-month-button h5::before {
+    content: "30d";
+    font-size: 16px;
+  }
   #Rankings .tabs .container > button {
     padding: 0px 10px;
     width: 100%;
