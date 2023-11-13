@@ -35,7 +35,7 @@ const loadingElement = document.querySelector(".loader");
 loadingElement.style.display = "none";
 
 function getData() {
-  loadingElement.style.display = "flex";
+  loadingElement.style.display = "grid";
   fetch(API_BASE_URL)
     .then((res) => {
       if (res.status !== 200) {

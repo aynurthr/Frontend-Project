@@ -25,7 +25,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/creators", (req, res) => {
-  res.status(200).json(creators);
+  setTimeout(() => {
+    res.status(200).json(creators);
+  }, 3000);
 });
 
 app.get("/api/creators/:id", (req, res) => {
