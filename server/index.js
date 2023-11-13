@@ -79,24 +79,26 @@ app.post("/api/nfts", (req, res) => {
     const startIndex = skip ? skip : 0;
     const endIndex = startIndex + pageSize;
 
-    const filteredNFTS = nfts.filter((nft) =>
-      searchStr
-        ? nft.name.toLowerCase().includes(searchStr.toLowerCase())
-        : true
-    );
-    const nftsSlice = filteredNFTS.slice(startIndex, endIndex).map((nft) => ({
-      ...nft,
-      creator: creators.find((c) => c.id == nft.creatorId),
-      creatorId: undefined,
-    }));
+    const filteredNFTS = nfts
+      .filter((nft) =>
+        searchStr
+          ? nft.name.toLowerCase().includes(searchStr.toLowerCase())
+          : true
+      )
+      .map((nft) => ({
+        ...nft,
+        creator: creators.find((c) => c.id == nft.creatorId),
+        creatorId: undefined,
+      }))
+      .filter((nft) => nft.creator !== undefined); //if the creator is undefined, the API wont send back that NFT
 
-    setTimeout(() => {
-      res.status(200).json({
-        totalCount: filteredNFTS.length,
-        hasMore: endIndex < filteredNFTS.length,
-        nfts: nftsSlice,
-      });
-    }, 3000);
+    const nftsSlice = filteredNFTS.slice(startIndex, endIndex);
+
+    res.status(200).json({
+      totalCount: filteredNFTS.length,
+      hasMore: endIndex < filteredNFTS.length,
+      nfts: nftsSlice,
+    });
   } catch (error) {
     res.status(500).json({ error: `Internal Server Error! ${error}` });
   }

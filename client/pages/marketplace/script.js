@@ -17,7 +17,6 @@ let currentSearchId = 0;
 
 function fetchNFTs() {
   const currentSearch = currentSearchId;
-  console.log(currentSearch);
   showLoader();
   fetch(NFT_API_URL, {
     method: "POST",
@@ -35,9 +34,6 @@ function fetchNFTs() {
     })
     .then((data) => {
       if (currentSearch === currentSearchId) {
-        console.log(currentSearch);
-        console.log(data);
-
         totalNFTCount.innerHTML = data.totalCount;
         if (data.totalCount == 0) {
           const emptyDivElement = document.createElement("div");
@@ -68,7 +64,6 @@ searchInput.addEventListener("keyup", function (event) {
   clearTimeout(timeoutId);
   timeoutId = setTimeout(() => {
     if (currentSearch === currentSearchId) {
-      console.log(currentSearch);
       searchStr = event.target.value;
       skip = 0;
       nftContainer.innerHTML = "";
@@ -82,6 +77,7 @@ function renderNFTs(nfts) {
   nfts.forEach((nft) => {
     const nftElement = document.createElement("div");
     nftElement.classList.add("nft-container__nft");
+
     nftElement.innerHTML = `
         <img src="../../../${nft.imgPath}" alt="${nft.name}" />
         <div class="nft-container__nft__text">
