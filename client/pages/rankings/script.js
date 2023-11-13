@@ -32,6 +32,7 @@ const API_BASE_URL = "http://localhost:3000/api/creators";
 const artistsContainer = document.querySelector(".artists__container");
 const loadingElement = document.querySelector(".artists__container__loader");
 loadingElement.style.display = "none";
+let artists;
 
 function getData() {
   loadingElement.style.display = "flex";
@@ -42,14 +43,13 @@ function getData() {
       return res.json();
     })
     .then((data) => {
-      let artists = data;
-      console.log(artists);
+      artists = data;
+      sortArtists(artists, "id", "asc", true);
       artists.forEach((artist, idx) => {
         createArtistBox(artist, artistsContainer);
         newArtist = document.querySelectorAll(".artists__container__artist")[
           idx
         ];
-        console.log(newArtist);
         newArtist.addEventListener("click", () => {
           window.open(
             `../../../client/pages/artist/index.html?artist_id=${artist.id}`,
@@ -66,7 +66,7 @@ function getData() {
     </div>`;
       document.querySelector(".artists__container").innerHTML = errorMessage;
       document.querySelector(".artists__btns").style.display = "none";
-      document.querySelector(".top-artists__artists").style.display = "initial";
+      // document.querySelector(".top-artists__artists").style.display = "initial";
     })
     .finally(() => {
       loadingElement.style.display = "none";
@@ -103,7 +103,6 @@ function createArtistBox(artist, artistsContainer) {
 
   const artistDeleteBtn =
     artistContainer.getElementsByClassName("delete-btn")[0];
-  console.log(artistDeleteBtn);
   artistDeleteBtn.addEventListener("click", (e) => {
     artistDelete(artist.id, artist.name, artistContainer);
     e.stopPropagation();
@@ -121,4 +120,100 @@ async function artistDelete(artistId, artistName, artistContainer) {
       artistContainer.remove();
     }
   }
+}
+
+//sorting buttons
+const idSort = document.getElementById("id-sort");
+const nameSort = document.getElementById("name-sort");
+const changeSort = document.getElementById("change-sort");
+const nftSort = document.getElementById("nft-sort");
+const volumeSort = document.getElementById("volume-sort");
+
+function sortArtists(property, sortOrder) {
+  //first we select our artists inside the container witout selecting the loader
+  const artistsArray = Array.from(artistsContainer.children).filter(
+    (child) => !child.classList.contains("artists__container__loader")
+  );
+
+  artistsArray.sort((a, b) => {
+    const valueA = getSortValue(a, property);
+    const valueB = getSortValue(b, property);
+
+    if (Number.isNaN(valueA) && Number.isNaN(valueB)) {
+      if (sortOrder == "ascending") {
+        return valueA - valueB;
+      } else {
+        return valueB - valueA;
+      }
+    } else {
+      if (sortOrder == "ascending") {
+        //this one is for sorting the string
+        return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+      } else {
+        return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+      }
+    }
+  });
+
+  artistsContainer.innerHTML = "";
+  artistsArray.forEach((artist) => {
+    artistsContainer.appendChild(artist);
+  });
+}
+
+//For getting and converting the values of artists in order to sort them:
+function getSortValue(element, property) {
+  switch (property) {
+    case "id":
+      return parseInt(
+        element.querySelector(".artists__container__artist__rank-artist__rank")
+          .textContent
+      );
+    case "name":
+      return element.querySelector(
+        ".artists__container__artist__rank-artist__artist h5"
+      ).textContent;
+    case "change":
+      return parseFloat(
+        element
+          .querySelector(".artists__container__artist__stats p:nth-child(1)")
+          .textContent.slice(1, -1)
+      );
+    case "nftSold":
+      return parseInt(
+        element.querySelector(
+          ".artists__container__artist__stats p:nth-child(2)"
+        ).textContent
+      );
+    case "volume":
+      return parseInt(
+        element.querySelector(
+          ".artists__container__artist__stats p:nth-child(3)"
+        ).textContent
+      );
+  }
+}
+
+let currentSort = {
+  //since the API returns the artists in sorted form by id, this will be the current sorting order
+  property: "id",
+  order: "ascending",
+};
+
+idSort.addEventListener("click", () => sortAndRenderArtists("id"));
+nameSort.addEventListener("click", () => sortAndRenderArtists("name"));
+changeSort.addEventListener("click", () => sortAndRenderArtists("change"));
+nftSort.addEventListener("click", () => sortAndRenderArtists("nftSold"));
+volumeSort.addEventListener("click", () => sortAndRenderArtists("volume"));
+
+function sortAndRenderArtists(property) {
+  if (currentSort.property === property) {
+    currentSort.order =
+      currentSort.order === "ascending" ? "descending" : "ascending";
+  } else {
+    //if it's a different property, we set order to ascending
+    currentSort.order = "ascending";
+  }
+  currentSort.property = property;
+  sortArtists(property, currentSort.order);
 }

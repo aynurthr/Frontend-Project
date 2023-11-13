@@ -1490,9 +1490,6 @@
   #Home .top-artists__artists__bad-request img {
     width: 30px;
   }
-  #Home .top-artists__artists__artist:nth-child(n+7) {
-    display: none;
-  }
   #Home .top-artists__artists__artist {
     width: 330px;
     -webkit-box-orient: horizontal;

@@ -587,10 +587,6 @@
             width: 30px;
           }
         }
-        //at tablet and mobile versions, only top 6 are shown:
-        &__artist:nth-child(n + 7) {
-          display: none;
-        }
         grid-template-columns: repeat(2, 1fr);
         &__artist {
           width: 330px;
