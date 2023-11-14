@@ -764,13 +764,38 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
     }
+    &__collection {
+      display: none;
+    }
     &__card {
-      @include primary-transition();
+      transition: all 0.3s ease;
+      &:hover {
+        transform: scale(0.97);
+        cursor: pointer;
+      }
       display: flex;
       flex-direction: column;
       background-color: $background;
       border-radius: 20px;
       width: 330px;
+      position: relative;
+      #heart-icon {
+        border-radius: 100px;
+        background-color: $background---secondary;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        img {
+          width: 20px;
+          height: 20px;
+          border-radius: 0;
+        }
+      }
       > img {
         height: 296px;
         object-fit: cover;

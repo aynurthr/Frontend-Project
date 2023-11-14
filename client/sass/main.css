@@ -4370,6 +4370,9 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
+#Artist .nft-cards__collection {
+  display: none;
+}
 #Artist .nft-cards__card {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
@@ -4383,11 +4386,35 @@
   background-color: #2b2b2b;
   border-radius: 20px;
   width: 330px;
+  position: relative;
 }
 #Artist .nft-cards__card:hover {
-  -webkit-transform: scale(0.9);
-          transform: scale(0.9);
+  -webkit-transform: scale(0.97);
+          transform: scale(0.97);
   cursor: pointer;
+}
+#Artist .nft-cards__card #heart-icon {
+  border-radius: 100px;
+  background-color: #3b3b3b;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 40px;
+  height: 40px;
+}
+#Artist .nft-cards__card #heart-icon img {
+  width: 20px;
+  height: 20px;
+  border-radius: 0;
 }
 #Artist .nft-cards__card > img {
   height: 296px;
