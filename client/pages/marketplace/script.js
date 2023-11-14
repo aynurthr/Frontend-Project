@@ -79,6 +79,12 @@ function renderNFTs(nfts) {
     nftElement.classList.add("nft-container__nft");
 
     nftElement.innerHTML = `
+    <div id="heart-icon">
+    <img
+      src="../../media/icons/heart.svg"
+      alt="heart icon"
+    />
+  </div>
         <img src="../../../${nft.imgPath}" alt="${nft.name}" />
         <div class="nft-container__nft__text">
           <h5>${nft.name}</h5>
@@ -98,6 +104,18 @@ function renderNFTs(nfts) {
           </div>
         </div>
       `;
+    const heartIcon = nftElement.querySelector("#heart-icon");
+    const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+    const isFavorite = favoriteNfts.includes(nft.name);
+    updateHeartIcon(heartIcon, isFavorite);
+    heartIcon.addEventListener("click", () => {
+      handleHeartIconClick(nft.name);
+      // Optionally, you can update the UI to reflect the change in favorite status
+      const favoriteNfts =
+        JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+      const isFavorite = favoriteNfts.includes(nft.name);
+      updateHeartIcon(heartIcon, isFavorite);
+    });
     nftContainer.appendChild(nftElement);
   });
 }
@@ -117,6 +135,33 @@ onVisible(loadMoreButton, () => {
   loadMoreButton.style.display = "none";
   fetchNFTs();
 });
+
+//Favourites:
+function handleHeartIconClick(nftName) {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  const index = favoriteNfts.indexOf(nftName);
+  if (index !== -1) {
+    favoriteNfts.splice(index, 1);
+  } else {
+    favoriteNfts.push(nftName);
+  }
+  localStorage.setItem("favoriteNfts", JSON.stringify(favoriteNfts));
+  updateCollectionNumber();
+}
+
+function updateHeartIcon(heartIcon, isFavorite) {
+  const heartImg = heartIcon.querySelector("img");
+  heartImg.src = isFavorite
+    ? "../../media/icons/heart-filled.svg"
+    : "../../media/icons/heart.svg";
+}
+
+function updateCollectionNumber() {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  document.querySelector("#collection-button div").innerHTML =
+    favoriteNfts.length;
+}
+updateCollectionNumber();
 
 //For tab buttons:
 const nftsBtn = document.getElementById("nfts-button");
