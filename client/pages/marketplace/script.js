@@ -1,8 +1,14 @@
 const NFT_API_URL = "http://localhost:3000/api/nfts";
 const totalNFTCount = document.getElementById("total-nft-count");
 const nftContainer = document.getElementById("container");
+const collectionContainer = document.getElementsByClassName(
+  "nft-container__collections"
+)[0];
 const loader = document.getElementById("loader");
 const loadMoreButton = document.getElementById("load-more-btn");
+const loadMoreButtonCollection = document.getElementById(
+  "load-more-btn-collection"
+);
 const searchInput = document.getElementById("search-input");
 
 let pageSize = 6;
@@ -43,7 +49,7 @@ function fetchNFTs() {
           emptyDivElement.style.gridColumn = "span 3";
           nftContainer.appendChild(emptyDivElement);
         } else {
-          renderNFTs(data.nfts);
+          renderNFTs(data.nfts, nftContainer);
           skip += pageSize;
         }
 
@@ -55,6 +61,57 @@ function fetchNFTs() {
         }
       }
     });
+}
+
+let currentIndex = 0;
+function updateCollectionsContainer() {
+  currentIndex = 0;
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  collectionContainer.innerHTML = "";
+
+  collectionBtn.disabled = true;
+  fetchCollectionNFTs(favoriteNfts, currentIndex);
+  console.log(currentIndex);
+}
+
+function fetchCollectionNFTs(favoriteNfts, currentIndex) {
+  console.log(favoriteNfts);
+  for (let i = currentIndex; i < currentIndex + pageSize; i++) {
+    if (i != favoriteNfts.length) {
+      const currentSearch = favoriteNfts[i];
+      showLoader();
+      fetch(NFT_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pageSize: 1,
+          searchStr: currentSearch,
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Fetched data:", data);
+
+          renderNFTs(data.nfts, collectionContainer);
+
+          currentIndex++;
+          console.log(currentIndex);
+
+          if (currentIndex === favoriteNfts.length - 1) {
+            // All favorites loaded
+            hideLoader();
+            loadMoreButtonCollection.style.display = "none";
+            collectionBtn.disabled = false;
+          }
+        });
+    } else {
+      return;
+    }
+  }
 }
 
 let timeoutId = 0;
@@ -73,7 +130,7 @@ searchInput.addEventListener("keyup", function (event) {
   }, 300);
 });
 
-function renderNFTs(nfts) {
+function renderNFTs(nfts, container) {
   nfts.forEach((nft) => {
     const nftElement = document.createElement("div");
     nftElement.classList.add("nft-container__nft");
@@ -116,7 +173,7 @@ function renderNFTs(nfts) {
       const isFavorite = favoriteNfts.includes(nft.name);
       updateHeartIcon(heartIcon, isFavorite);
     });
-    nftContainer.appendChild(nftElement);
+    container.appendChild(nftElement);
   });
 }
 
@@ -131,9 +188,18 @@ function onVisible(element, callback) {
   if (!callback) return new Promise((r) => (callback = r));
 }
 
+collectionContainer.style.display = "none"; //when the page loads for the first time
 onVisible(loadMoreButton, () => {
   loadMoreButton.style.display = "none";
   fetchNFTs();
+});
+
+onVisible(loadMoreButtonCollection, () => {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  if (favoriteNfts.length != 0) {
+    loadMoreButtonCollection.style.display = "none";
+    fetchCollectionNFTs(favoriteNfts, currentIndex);
+  }
 });
 
 //Favourites:
@@ -147,6 +213,22 @@ function handleHeartIconClick(nftName) {
   }
   localStorage.setItem("favoriteNfts", JSON.stringify(favoriteNfts));
   updateCollectionNumber();
+
+  //change the heart icon in container nfts:
+  const nftContainer = document.getElementById("container");
+  const nftElement = Array.from(
+    nftContainer.getElementsByClassName("nft-container__nft")
+  ).find((nft) => {
+    const nftTitle = nft.querySelector(
+      ".nft-container__nft__text h5"
+    ).innerText;
+    return nftTitle === nftName;
+  });
+
+  if (nftElement) {
+    const heartIcon = nftElement.querySelector("#heart-icon");
+    updateHeartIcon(heartIcon, index === -1);
+  }
 }
 
 function updateHeartIcon(heartIcon, isFavorite) {
@@ -176,22 +258,33 @@ function btnClick(button) {
 
 nftsBtn.addEventListener("click", () => {
   btnClick(nftsBtn);
+  collectionContainer.style.display = "none";
   if (nftCardsContainer.childElementCount > 0) {
     //checks whether there are any nfts in the container
     nftCardsContainer.style.display = "grid";
     document.querySelector(".nft-container__empty").style.display = "none";
-    document.querySelector(".loader-container").style.display = "flex";
   } else {
-    return;
+    document.querySelector(".nft-container__empty").style.display = "initial";
   }
 });
 
 collectionBtn.addEventListener("click", () => {
   btnClick(collectionBtn);
   nftCardsContainer.style.display = "none";
-  document.querySelector(".nft-container__empty").style.display = "initial";
-  document.querySelector(".loader-container").style.display = "none";
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  if (favoriteNfts.length > 0) {
+    //checks whether there are any nfts in the container
+    updateCollectionsContainer();
+    collectionContainer.style.display = "grid";
+    document.querySelector(".nft-container__empty").style.display = "none";
+  } else {
+    loadMoreButtonCollection.style.display = "none";
+    hideLoader();
+    collectionContainer.style.display = "none";
+    document.querySelector(".nft-container__empty").style.display = "initial";
+  }
 });
+
 btnClick(nftsBtn);
 
 function showLoader() {

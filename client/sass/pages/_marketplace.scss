@@ -79,6 +79,10 @@
       display: flex;
       justify-content: space-between;
       > button {
+        &:disabled {
+          opacity: 0.5;
+          cursor: default;
+        }
         transition: all 0.3s ease;
         cursor: pointer;
         background-color: transparent;

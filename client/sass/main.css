@@ -4743,6 +4743,10 @@
       -ms-flex-pack: center;
           justify-content: center;
 }
+#Marketplace .tabs .container > button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
 #Marketplace .tabs .container > button h5 {
   color: #fff;
   font-family: "Work Sans";
