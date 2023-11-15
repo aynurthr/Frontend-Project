@@ -118,8 +118,17 @@ async function artistDelete(artistId, artistName, artistContainer) {
     });
     if (response.status === 200) {
       artistContainer.remove();
+      removeArtistFromLocalStorage(artistName);
     }
   }
+}
+
+function removeArtistFromLocalStorage(artistName) {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  const updatedFavorites = favoriteNfts.filter(
+    (artist) => artist[0] !== artistName
+  );
+  localStorage.setItem("favoriteNfts", JSON.stringify(updatedFavorites));
 }
 
 //sorting buttons
