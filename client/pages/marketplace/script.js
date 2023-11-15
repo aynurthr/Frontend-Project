@@ -170,7 +170,7 @@ onVisible(loadMoreButtonCollection, async () => {
 });
 
 async function updateCollectionsContainer() {
-  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  const flatFavoriteNfts = flattenFavoriteNfts(); //[a,b,c,d] kimi array verecek
   collectionContainer.innerHTML = "";
 
   if (!isFetchingCollectionNfts) {
@@ -178,7 +178,7 @@ async function updateCollectionsContainer() {
     collectionBtn.disabled = true;
     currentCollectionNftIdx = 0;
     currentCollectionNftIdx = await fetchCollectionNFTs(
-      favoriteNfts,
+      flatFavoriteNfts,
       currentCollectionNftIdx
     );
     isFetchingCollectionNfts = false;
@@ -186,7 +186,7 @@ async function updateCollectionsContainer() {
   }
 }
 
-async function fetchCollectionNFTs(favoriteNfts, startIndex) {
+async function fetchCollectionNFTs(flatFavoriteNfts, startIndex) {
   let localIndex = startIndex;
 
   while (localIndex < getTotalNumberOfFavoriteNfts()) {
@@ -196,7 +196,8 @@ async function fetchCollectionNFTs(favoriteNfts, startIndex) {
     const endIndex = Math.min(localIndex + 6, getTotalNumberOfFavoriteNfts());
 
     //6 nft adi secirik local storageden
-    const batch = favoriteNfts.slice(localIndex, endIndex);
+    const batch = flatFavoriteNfts.slice(localIndex, endIndex);
+    console.log(batch);
 
     //burdan nft-leri fetch edirik, amma qaytarilan array-de ancaq promiseler olacaq, hele ki
     const responses = await Promise.all(
@@ -266,7 +267,6 @@ function handleHeartIconClick(nftName, artistName) {
     ).innerText;
     return nftTitle === nftName;
   });
-  console.log(nftElement);
 
   if (nftElement) {
     const heartIcon = nftElement.querySelector("#heart-icon");
@@ -292,7 +292,14 @@ function updateCollectionNumber() {
   document.querySelector("#collection-button div").innerHTML =
     getTotalNumberOfFavoriteNfts();
 }
-updateCollectionNumber();
+updateCollectionNumber(); //ilk basda update edirik
+
+//flatten edende arrayde sadece nft adlari saxlanilacaq
+//bu collection container-ini doldurmaq ucundu
+function flattenFavoriteNfts() {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  return favoriteNfts.flatMap((artistEntry) => artistEntry[1]);
+}
 
 //For tab buttons:
 const nftsBtn = document.getElementById("nfts-button");
