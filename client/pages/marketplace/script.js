@@ -20,11 +20,12 @@ let searchStr = "";
 //bu o demekdir ki, yeni request gonderilib, ve kohne requestin cavabi
 //artiq lazim deyil, ve hemin kohne datani artiq container e doldurmuruq.
 let currentSearchId = 0;
+isFetchingData = false;
 
 function fetchNFTs() {
   const currentSearch = currentSearchId;
   console.log("update");
-
+  isFetchingData = true;
   showLoader();
   fetch(NFT_API_URL, {
     method: "POST",
@@ -62,6 +63,7 @@ function fetchNFTs() {
           loadMoreButtonNfts.style.display = "block";
         }
       }
+      isFetchingData = false;
     });
 }
 
@@ -328,14 +330,18 @@ function btnClick(button) {
 nftsBtn.addEventListener("click", () => {
   btnClick(nftsBtn);
   collectionContainer.style.display = "none";
-  if (nftCardsContainer.childElementCount > 0) {
+  if (nftCardsContainer.childElementCount == 0 && !isFetchingData) {
+    document.querySelector(".nft-container__empty").style.display = "initial";
+  } else if (isFetchingData) {
+    console.log("isfetch");
+    loadMoreButtonNfts.style.display = "none";
+    nftCardsContainer.style.display = "grid";
+  } else {
     loadMoreButtonNfts.style.display = "initial";
     loadMoreButtonCollection.style.display = "none";
     //checks whether there are any nfts in the container
     nftCardsContainer.style.display = "grid";
     document.querySelector(".nft-container__empty").style.display = "none";
-  } else {
-    document.querySelector(".nft-container__empty").style.display = "initial";
   }
 });
 
