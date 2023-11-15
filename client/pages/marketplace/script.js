@@ -21,6 +21,18 @@ let searchStr = "";
 //artiq lazim deyil, ve hemin kohne datani artiq container e doldurmuruq.
 let currentSearchId = 0;
 
+function getTotalNumberOfFavoriteNfts() {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  let totalNfts = 0;
+
+  favoriteNfts.forEach((artist) => {
+    totalNfts += artist[1].length;
+  });
+
+  console.log(totalNfts);
+  return totalNfts;
+}
+
 function fetchNFTs() {
   const currentSearch = currentSearchId;
   showLoader();
@@ -112,14 +124,13 @@ function renderNFTs(nfts, container) {
       `;
     const heartIcon = nftElement.querySelector("#heart-icon");
     const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
-    const isFavorite = favoriteNfts.includes(nft.name);
+    const isFavorite = checkIfFavorite(nft.name, nft.creator.name);
     updateHeartIcon(heartIcon, isFavorite);
     heartIcon.addEventListener("click", () => {
-      handleHeartIconClick(nft.name);
-      // Optionally, you can update the UI to reflect the change in favorite status
+      handleHeartIconClick(nft.name, nft.creator.name);
       const favoriteNfts =
         JSON.parse(localStorage.getItem("favoriteNfts")) || [];
-      const isFavorite = favoriteNfts.includes(nft.name);
+      const isFavorite = checkIfFavorite(nft.name, nft.creator.name);
       updateHeartIcon(heartIcon, isFavorite);
     });
     container.appendChild(nftElement);
@@ -150,8 +161,8 @@ let isFetchingCollectionNfts = false;
 onVisible(loadMoreButtonCollection, async () => {
   const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
   if (
-    favoriteNfts.length !== 0 &&
-    currentCollectionNftIdx < favoriteNfts.length
+    getTotalNumberOfFavoriteNfts() !== 0 &&
+    currentCollectionNftIdx < getTotalNumberOfFavoriteNfts()
   ) {
     loadMoreButtonCollection.style.display = "none";
     await fetchCollectionNFTs(favoriteNfts);
@@ -178,11 +189,11 @@ async function updateCollectionsContainer() {
 async function fetchCollectionNFTs(favoriteNfts, startIndex) {
   let localIndex = startIndex;
 
-  while (localIndex < favoriteNfts.length) {
+  while (localIndex < getTotalNumberOfFavoriteNfts()) {
     showLoader();
 
     //burda iki reqem arasinda en kicik olani secib end pointi o reqem qoyuruq
-    const endIndex = Math.min(localIndex + 6, favoriteNfts.length);
+    const endIndex = Math.min(localIndex + 6, getTotalNumberOfFavoriteNfts());
 
     //6 nft adi secirik local storageden
     const batch = favoriteNfts.slice(localIndex, endIndex);
@@ -218,7 +229,7 @@ async function fetchCollectionNFTs(favoriteNfts, startIndex) {
 
     //eger hele de container e elave olunmamis collection nft qalibsa,
     //loadMoreBtn i gizledir, eks halda visible edir
-    if (localIndex >= favoriteNfts.length) {
+    if (localIndex >= getTotalNumberOfFavoriteNfts()) {
       loadMoreButtonCollection.style.display = "none";
     } else {
       loadMoreButtonCollection.style.display = "block";
@@ -226,18 +237,26 @@ async function fetchCollectionNFTs(favoriteNfts, startIndex) {
   }
 }
 
-function handleHeartIconClick(nftName) {
+function handleHeartIconClick(nftName, artistName) {
   const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
-  const index = favoriteNfts.indexOf(nftName);
-  if (index !== -1) {
-    favoriteNfts.splice(index, 1);
+  let artist = favoriteNfts.find((entry) => entry[0] === artistName);
+  if (artist) {
+    const nftIndex = artist[1].indexOf(nftName);
+    if (nftIndex !== -1) {
+      artist[1].splice(nftIndex, 1);
+      if (artist[1].length === 0) {
+        favoriteNfts.splice(favoriteNfts.indexOf(artist), 1);
+      }
+    } else {
+      artist[1].push(nftName);
+    }
   } else {
-    favoriteNfts.push(nftName);
+    favoriteNfts.push([artistName, [nftName]]);
   }
+
   localStorage.setItem("favoriteNfts", JSON.stringify(favoriteNfts));
   updateCollectionNumber();
 
-  //change the heart icon in container nfts:
   const nftContainer = document.getElementById("container");
   const nftElement = Array.from(
     nftContainer.getElementsByClassName("nft-container__nft")
@@ -247,10 +266,12 @@ function handleHeartIconClick(nftName) {
     ).innerText;
     return nftTitle === nftName;
   });
+  console.log(nftElement);
 
   if (nftElement) {
     const heartIcon = nftElement.querySelector("#heart-icon");
-    updateHeartIcon(heartIcon, index === -1);
+    const isFavorite = checkIfFavorite(nftName, artistName);
+    updateHeartIcon(heartIcon, isFavorite);
   }
 }
 
@@ -260,11 +281,16 @@ function updateHeartIcon(heartIcon, isFavorite) {
     ? "../../media/icons/heart-filled.svg"
     : "../../media/icons/heart.svg";
 }
+function checkIfFavorite(nftName, artistName) {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  const artist = favoriteNfts.find((entry) => entry[0] === artistName);
+
+  return artist ? artist[1].includes(nftName) : false;
+}
 
 function updateCollectionNumber() {
-  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
   document.querySelector("#collection-button div").innerHTML =
-    favoriteNfts.length;
+    getTotalNumberOfFavoriteNfts();
 }
 updateCollectionNumber();
 
@@ -295,7 +321,7 @@ collectionBtn.addEventListener("click", () => {
   btnClick(collectionBtn);
   nftCardsContainer.style.display = "none";
   const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
-  if (favoriteNfts.length > 0) {
+  if (getTotalNumberOfFavoriteNfts() > 0) {
     //checks whether there are any nfts in the container
     updateCollectionsContainer();
     collectionContainer.style.display = "grid";
