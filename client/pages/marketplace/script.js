@@ -63,57 +63,6 @@ function fetchNFTs() {
     });
 }
 
-let currentIndex = 0;
-function updateCollectionsContainer() {
-  currentIndex = 0;
-  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
-  collectionContainer.innerHTML = "";
-
-  collectionBtn.disabled = true;
-  fetchCollectionNFTs(favoriteNfts, currentIndex);
-  console.log(currentIndex);
-}
-
-function fetchCollectionNFTs(favoriteNfts, currentIndex) {
-  console.log(favoriteNfts);
-  for (let i = currentIndex; i < currentIndex + pageSize; i++) {
-    if (i != favoriteNfts.length) {
-      const currentSearch = favoriteNfts[i];
-      showLoader();
-      fetch(NFT_API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          pageSize: 1,
-          searchStr: currentSearch,
-        }),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Fetched data:", data);
-
-          renderNFTs(data.nfts, collectionContainer);
-
-          currentIndex++;
-          console.log(currentIndex);
-
-          if (currentIndex === favoriteNfts.length - 1) {
-            // All favorites loaded
-            hideLoader();
-            loadMoreButtonCollection.style.display = "none";
-            collectionBtn.disabled = false;
-          }
-        });
-    } else {
-      return;
-    }
-  }
-}
-
 let timeoutId = 0;
 searchInput.addEventListener("keyup", function (event) {
   currentSearchId++;
@@ -194,15 +143,89 @@ onVisible(loadMoreButton, () => {
   fetchNFTs();
 });
 
-onVisible(loadMoreButtonCollection, () => {
+//Favourites:
+let currentCollectionNftIdx = 0;
+let isFetchingCollectionNfts = false;
+
+onVisible(loadMoreButtonCollection, async () => {
   const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
-  if (favoriteNfts.length != 0) {
+  if (
+    favoriteNfts.length !== 0 &&
+    currentCollectionNftIdx < favoriteNfts.length
+  ) {
     loadMoreButtonCollection.style.display = "none";
-    fetchCollectionNFTs(favoriteNfts, currentIndex);
+    await fetchCollectionNFTs(favoriteNfts);
   }
 });
 
-//Favourites:
+async function updateCollectionsContainer() {
+  const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
+  collectionContainer.innerHTML = "";
+
+  if (!isFetchingCollectionNfts) {
+    isFetchingCollectionNfts = true;
+    collectionBtn.disabled = true;
+    currentCollectionNftIdx = 0;
+    currentCollectionNftIdx = await fetchCollectionNFTs(
+      favoriteNfts,
+      currentCollectionNftIdx
+    );
+    isFetchingCollectionNfts = false;
+    collectionBtn.disabled = false;
+  }
+}
+
+async function fetchCollectionNFTs(favoriteNfts, startIndex) {
+  let localIndex = startIndex;
+
+  while (localIndex < favoriteNfts.length) {
+    showLoader();
+
+    //burda iki reqem arasinda en kicik olani secib end pointi o reqem qoyuruq
+    const endIndex = Math.min(localIndex + 6, favoriteNfts.length);
+
+    //6 nft adi secirik local storageden
+    const batch = favoriteNfts.slice(localIndex, endIndex);
+
+    //burdan nft-leri fetch edirik, amma qaytarilan array-de ancaq promiseler olacaq, hele ki
+    const responses = await Promise.all(
+      batch.map(async (currentSearch) => {
+        return fetch(NFT_API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pageSize: 1,
+            searchStr: currentSearch,
+          }),
+        });
+      })
+    );
+
+    //bize qaytarilan promise-leri bir-bir await edirik
+    const nftsData = await Promise.all(
+      responses.map((response) => response.json())
+    );
+
+    //her birinin cardini yaradib container e elave edirik
+    nftsData.forEach((data) => {
+      renderNFTs(data.nfts, collectionContainer);
+    });
+
+    hideLoader();
+    localIndex += 6;
+
+    //eger hele de container e elave olunmamis collection nft qalibsa,
+    //loadMoreBtn i gizledir, eks halda visible edir
+    if (localIndex >= favoriteNfts.length) {
+      loadMoreButtonCollection.style.display = "none";
+    } else {
+      loadMoreButtonCollection.style.display = "block";
+    }
+  }
+}
+
 function handleHeartIconClick(nftName) {
   const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
   const index = favoriteNfts.indexOf(nftName);
