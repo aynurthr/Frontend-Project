@@ -5105,6 +5105,9 @@
 #Marketplace .clicked-on div {
   background: #858584 !important;
 }
+#Marketplace #load-more-btn-collection {
+  display: none;
+}
 #Marketplace .footer {
   border-top: 2px solid #2b2b2b !important;
 }
