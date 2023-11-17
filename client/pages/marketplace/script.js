@@ -235,16 +235,6 @@ async function fetchCollectionNFTs(flatFavoriteNfts, startIndex) {
   //burdan nft-leri fetch edirik, amma qaytarilan array-de ancaq promiseler olacaq, hele ki
   const responses = await Promise.all(
     batch.map(async (currentSearch) => {
-      // return fetch(NFT_API_URL, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     pageSize: 1,
-      //     searchStr: currentSearch,
-      //   }),
-      // });
       try {
         const response = await fetch(NFT_API_URL, {
           method: "POST",
