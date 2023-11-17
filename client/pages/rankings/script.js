@@ -60,7 +60,7 @@ function getData() {
     })
     .catch((err) => {
       const errorMessage = `
-    <div class="artists__container__bad-request">
+    <div id="bad-request">
     <img src="../../media/icons/sad-face.svg" alt="sad face icon" />
       <p>Sorry, we are experiencing technical difficulties with our API server. Please check back later.</p>
     </div>`;
@@ -112,7 +112,10 @@ function createArtistBox(artist, artistsContainer) {
 }
 
 async function artistDelete(artistId, artistName, artistContainer) {
-  if (confirm(`Are you sure to delete ${artistName} from the rankings?`)) {
+  if (
+    confirm(`Are you sure you want to delete ${artistName} from the Rankings?
+Keep in mind that deleting the artist also removes their NFts from the Marketplace.`)
+  ) {
     const response = await fetch(`${API_BASE_URL}/${artistId}`, {
       method: "DELETE",
     });

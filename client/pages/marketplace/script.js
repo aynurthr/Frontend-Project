@@ -24,7 +24,6 @@ isFetchingData = false;
 
 function fetchNFTs() {
   const currentSearch = currentSearchId;
-  console.log("update");
   isFetchingData = true;
   showLoader();
   fetch(NFT_API_URL, {
@@ -64,6 +63,15 @@ function fetchNFTs() {
         }
       }
       isFetchingData = false;
+    })
+    .catch((err) => {
+      const errorMessage = `
+    <div id="bad-request">
+    <img src="../../media/icons/sad-face.svg" alt="sad face icon" />
+      <p>Sorry, we are experiencing technical difficulties with our API server. Please check back later.</p>
+    </div>`;
+      document.querySelector("#container").innerHTML = errorMessage;
+      hideLoader();
     });
 }
 
@@ -142,7 +150,6 @@ function onVisible(element, callback) {
 
 onVisible(loadMoreButtonNfts, () => {
   loadMoreButtonNfts.style.display = "none";
-  console.log("visible");
   fetchNFTs();
 });
 
@@ -219,24 +226,50 @@ async function fetchCollectionNFTs(flatFavoriteNfts, startIndex) {
 
   //alti eded nft secir
   const batch = flatFavoriteNfts.slice(localIndex, endIndex);
-  console.log(batch);
   showLoader();
 
   //burdan nft-leri fetch edirik, amma qaytarilan array-de ancaq promiseler olacaq, hele ki
   const responses = await Promise.all(
     batch.map(async (currentSearch) => {
-      return fetch(NFT_API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          pageSize: 1,
-          searchStr: currentSearch,
-        }),
-      });
+      // return fetch(NFT_API_URL, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     pageSize: 1,
+      //     searchStr: currentSearch,
+      //   }),
+      // });
+      try {
+        const response = await fetch(NFT_API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pageSize: 1,
+            searchStr: currentSearch,
+          }),
+        });
+        return response;
+      } catch (error) {
+        return "unsuccessful";
+      }
     })
   );
+
+  //API-da error olsa:
+  if (responses[0] == "unsuccessful") {
+    var errorMessage = `
+    <div id="bad-request">
+    <img src="../../media/icons/sad-face.svg" alt="sad face icon" />
+      <p>Sorry, we are experiencing technical difficulties with our API server. Please check back later.</p>
+    </div>`;
+    document.querySelector(".nft-container__collections").innerHTML =
+      errorMessage;
+    return;
+  }
 
   //bize qaytarilan promise-leri bir-bir await edirik
   const nftsData = await Promise.all(
@@ -333,7 +366,7 @@ nftsBtn.addEventListener("click", () => {
   if (nftCardsContainer.childElementCount == 0 && !isFetchingData) {
     document.querySelector(".nft-container__empty").style.display = "initial";
   } else if (isFetchingData) {
-    console.log("isfetch");
+    //bu anda containerin ici bosdur, lakin data hele fetch olunmayib deyedir
     loadMoreButtonNfts.style.display = "none";
     nftCardsContainer.style.display = "grid";
   } else {

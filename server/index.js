@@ -94,13 +94,11 @@ app.post("/api/nfts", (req, res) => {
 
     const nftsSlice = filteredNFTS.slice(startIndex, endIndex);
 
-    setTimeout(() => {
-      res.status(200).json({
-        totalCount: filteredNFTS.length,
-        hasMore: endIndex < filteredNFTS.length,
-        nfts: nftsSlice,
-      });
-    }, 2000);
+    res.status(200).json({
+      totalCount: filteredNFTS.length,
+      hasMore: endIndex < filteredNFTS.length,
+      nfts: nftsSlice,
+    });
   } catch (error) {
     res.status(500).json({ error: `Internal Server Error! ${error}` });
   }

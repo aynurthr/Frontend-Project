@@ -46,7 +46,7 @@ form.addEventListener("submit", function (event) {
     valid = false;
     document.querySelector(".username.error-message").textContent =
       "*Required field";
-  } else if (!usernameRegex.test(username.value)) {
+  } else if (!usernameRegex.test(username.value.trim())) {
     valid = false;
     document.querySelector(".username.error-message").textContent =
       "Invalid username";
@@ -58,7 +58,7 @@ form.addEventListener("submit", function (event) {
     valid = false;
     document.querySelector(".email.error-message").textContent =
       "*Required field";
-  } else if (!emailRegex.test(email.value)) {
+  } else if (!emailRegex.test(email.value.trim())) {
     valid = false;
     document.querySelector(".email.error-message").textContent =
       "Invalid email address";

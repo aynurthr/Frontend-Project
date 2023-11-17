@@ -1,6 +1,6 @@
 //For Timer
-//November 20, 2023, at 00:00:00
-var date = new Date(Date.UTC(2023, 10, 20, 0, 0, 0));
+//November 30, 2023, at 00:00:00
+var date = new Date(Date.UTC(2023, 10, 30, 0, 0, 0));
 date.setHours(date.getHours() - 4); //GMT+4
 
 function updateTimer() {
@@ -59,7 +59,7 @@ function getData() {
     })
     .catch((err) => {
       const errorMessage = `
-      <div class="top-artists__artists__bad-request">
+      <div id="bad-request">
       <img src="../../media/icons/sad-face.svg" alt="sad face icon" />
         <p>Sorry, we are experiencing technical difficulties with our API server. Please check back later.</p>
       </div>`;

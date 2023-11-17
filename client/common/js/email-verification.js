@@ -10,7 +10,7 @@ emailForms.forEach((emailForm, index) => {
 
     const email = emailInputs[index].value;
 
-    if (emailInputs[index].value === "") {
+    if (email.trim() === "") {
       Toastify({
         text: "Please enter your email address to subscribe.",
         duration: 3000,
@@ -21,7 +21,7 @@ emailForms.forEach((emailForm, index) => {
         },
       }).showToast();
     } else {
-      if (emailRegex.test(email)) {
+      if (emailRegex.test(email.trim())) {
         Toastify({
           text: "Subscription successful! Watch your inbox for updates.",
           duration: 3000,
