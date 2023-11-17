@@ -4,6 +4,7 @@ const nftContainer = document.getElementById("container");
 const collectionContainer = document.getElementsByClassName(
   "nft-container__collections"
 )[0];
+const emptyContainer = document.querySelector(".nft-container__empty");
 const loader = document.getElementById("loader");
 const loadMoreButtonNfts = document.getElementById("load-more-btn-nfts");
 const loadMoreButtonCollection = document.getElementById(
@@ -44,8 +45,14 @@ function fetchNFTs() {
       if (currentSearch === currentSearchId) {
         totalNFTCount.innerHTML = data.totalCount;
         if (data.totalCount == 0) {
+          const emptyDivElements =
+            document.getElementsByClassName("search-results");
+          while (emptyDivElements.length > 0) {
+            emptyDivElements[0].parentNode.removeChild(emptyDivElements[0]);
+          }
           const emptyDivElement = document.createElement("div");
           emptyDivElement.classList.add("nft-container__empty");
+          emptyDivElement.classList.add("search-results");
           emptyDivElement.innerHTML = `<h2>Oops! No Matching NFTs Found!</h2>`;
           emptyDivElement.style.display = "flex";
           emptyDivElement.style.gridColumn = "span 3";
@@ -123,13 +130,10 @@ function renderNFTs(nfts, container) {
         </div>
       `;
     const heartIcon = nftElement.querySelector("#heart-icon");
-    const favoriteNfts = JSON.parse(localStorage.getItem("favoriteNfts")) || [];
     const isFavorite = checkIfFavorite(nft.name, nft.creator.name);
     updateHeartIcon(heartIcon, isFavorite);
     heartIcon.addEventListener("click", () => {
       handleHeartIconClick(nft.name, nft.creator.name);
-      const favoriteNfts =
-        JSON.parse(localStorage.getItem("favoriteNfts")) || [];
       const isFavorite = checkIfFavorite(nft.name, nft.creator.name);
       updateHeartIcon(heartIcon, isFavorite);
     });
@@ -188,13 +192,13 @@ collectionBtn.addEventListener("click", () => {
     loadMoreButtonNfts.style.display = "none";
     updateCollectionsContainer();
     collectionContainer.style.display = "grid";
-    document.querySelector(".nft-container__empty").style.display = "none";
+    emptyContainer.style.display = "none";
   } else {
     hideLoader();
     loadMoreButtonNfts.style.display = "none";
     loadMoreButtonCollection.style.display = "none";
     collectionContainer.style.display = "none";
-    document.querySelector(".nft-container__empty").style.display = "initial";
+    emptyContainer.style.display = "initial";
   }
 });
 
@@ -364,7 +368,7 @@ nftsBtn.addEventListener("click", () => {
   btnClick(nftsBtn);
   collectionContainer.style.display = "none";
   if (nftCardsContainer.childElementCount == 0 && !isFetchingData) {
-    document.querySelector(".nft-container__empty").style.display = "initial";
+    emptyContainer.style.display = "initial";
   } else if (isFetchingData) {
     //bu anda containerin ici bosdur, lakin data hele fetch olunmayib deyedir
     loadMoreButtonNfts.style.display = "none";
@@ -374,7 +378,7 @@ nftsBtn.addEventListener("click", () => {
     loadMoreButtonCollection.style.display = "none";
     //checks whether there are any nfts in the container
     nftCardsContainer.style.display = "grid";
-    document.querySelector(".nft-container__empty").style.display = "none";
+    emptyContainer.style.display = "none";
   }
 });
 

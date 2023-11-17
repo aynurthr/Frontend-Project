@@ -66,7 +66,6 @@ function getData() {
     </div>`;
       document.querySelector(".artists__container").innerHTML = errorMessage;
       document.querySelector(".artists__btns").style.display = "none";
-      // document.querySelector(".top-artists__artists").style.display = "initial";
     })
     .finally(() => {
       loadingElement.style.display = "none";
