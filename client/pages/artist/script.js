@@ -48,7 +48,7 @@ btnClick(createdBtn);
 
 //API part:
 const API_BASE_URL = "https://nft-marketplace-6ncs.onrender.com/api/creators";
-const NOT_FOUND_URL = "http://127.0.0.1:5500/client/pages/not-found/index.html";
+const NOT_FOUND_URL = "../../../client/pages/not-found/index.html";
 let searchParams = new URLSearchParams(window.location.search);
 let artistId = searchParams.get("artist_id");
 updateCollectionNumber(artistId);

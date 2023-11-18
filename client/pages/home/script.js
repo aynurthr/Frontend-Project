@@ -115,6 +115,6 @@ document
   .querySelector(".NFT-info__left__artist")
   .addEventListener("click", () => {
     const artistId = 7;
-    const url = `http://127.0.0.1:5500/client/pages/artist/index.html?artist_id=${artistId}`;
+    const url = `../../../client/pages/artist/index.html?artist_id=${artistId}`;
     window.open(url, "_self");
   });
