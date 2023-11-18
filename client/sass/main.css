@@ -902,6 +902,15 @@
   cursor: pointer;
 }
 #Home .trending__collection__card__secondary div:last-child {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 100px;
   width: 100px;
   padding: 32px 15px;

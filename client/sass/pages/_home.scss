@@ -179,6 +179,9 @@
             @include primary-transition();
           }
           div:last-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100px;
             width: 100px;
             padding: 32px 15px;
