@@ -28,7 +28,7 @@ allTimeBtn.addEventListener("click", () => {
 btnClick(todayBtn);
 
 //API part:
-const API_BASE_URL = "http://localhost:3000/api/creators";
+const API_BASE_URL = "https://nft-marketplace-6ncs.onrender.com/api/creators";
 const artistsContainer = document.querySelector(".artists__container");
 const loadingElement = document.querySelector(".artists__container__loader");
 loadingElement.style.display = "none";

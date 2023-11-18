@@ -29,7 +29,7 @@ setInterval(updateTimer, 1000);
 
 //API part:
 
-const API_BASE_URL = "http://localhost:3000/api/creators";
+const API_BASE_URL = "https://nft-marketplace-6ncs.onrender.com/api/creators";
 const artistsContainer = document.querySelector(".top-artists__artists");
 const loadingElement = document.querySelector(".loader");
 loadingElement.style.display = "none";

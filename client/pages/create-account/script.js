@@ -95,7 +95,7 @@ form.addEventListener("submit", function (event) {
   if (valid) {
     newUsername = username.value.trim();
     createBtn.disabled = true;
-    fetch("http://localhost:3000/api/register", {
+    fetch("https://nft-marketplace-6ncs.onrender.com/api/register", {
       method: "POST",
       headers: {
         "CONTENT-TYPE": "application/json",
