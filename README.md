@@ -25,7 +25,7 @@ Welcome to the **NFT Marketplace** project! This is a front-end application desi
 - **CSS/SASS:** Used for styling the application, ensuring a consistent and visually appealing user interface. SASS is used for more efficient and maintainable styling.
 - **JavaScript:** Powers the interactive elements of the application, including form validation, infinite scroll, search functionality, sorting, and more.
 
-## Technologies Used
+## Structure
 
 The project follows a standard front-end and back-end file structure:
 - /client: Includes everything related to the front-end part of the project.
@@ -35,6 +35,9 @@ The project follows a standard front-end and back-end file structure:
   - /sass: Contains SASS files for styling the application.
 - /images: Stores image assets used throughout the front-end.
 - /server: This directory contains the backend part of the project, including the API for fetching NFT data.
+
+## Design
+The front-end design follows a modern and user-friendly layout, adhering to the design principles outlined in the [Figma template](https://www.figma.com/community/file/1173962104946517060).
 
 ## Deployment
 
